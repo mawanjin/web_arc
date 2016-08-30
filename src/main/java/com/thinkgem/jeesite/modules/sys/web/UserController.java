@@ -29,6 +29,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +65,19 @@ public class UserController extends BaseController {
     @RequiresPermissions("sys:user:view")
     @RequestMapping(value = {"list", ""})
     public String list(User user, HttpServletRequest request, HttpServletResponse response, Model model) {
+
+        Office office = user.getOffice();
+        if(office!=null){
+            String officeName = office.getName();
+            if(officeName!=null){
+                try {
+                    office.setName(URLDecoder.decode(officeName,"UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         Page<User> page = systemService.findUser(new Page<User>(request, response), user);
         model.addAttribute("page", page);
         return "modules/sys/userList";

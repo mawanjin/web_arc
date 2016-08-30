@@ -55,7 +55,6 @@
             width: 300,
             okValue: '确定',
             ok: function () {
-                debugger;
                 var iframeWindow = this.iframeNode.contentWindow;
                 var tree = iframeWindow.tree;
                 var ids = [], names = [], nodes = [];
@@ -93,7 +92,9 @@
                     </c:if>
                     ids.push(nodes[i].id);
                     names.push(nodes[i].name);
+
                     <c:if test="${!checked}">
+
                     break; // 如果为非复选框选择，则返回第一个选择
                     </c:if>
                 }

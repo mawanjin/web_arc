@@ -146,7 +146,7 @@
     <div class="content-wrapper">
         <section class="content">
             <iframe id="mainFrame" name="mainFrame" src="${firstUrl}" style="overflow:visible;" scrolling="yes"
-                    frameborder="no" width="100%" height="650"></iframe>
+                    frameborder="no" width="100%" height="100%"></iframe>
         </section>
     </div>
 
@@ -154,7 +154,7 @@
         <div class="pull-right hidden-xs">
             <b>Version</b> 1.0.0
         </div>
-        <strong>Copyright &copy; 2016 <a href="#">JEESite-NG</a>.</strong> All rights
+        <strong>Copyright &copy; 2016 <a href="#"></a>.</strong> All rights
         reserved.
     </footer>
 

@@ -45,7 +45,7 @@
     </div>
     <div class="row">
         <div class="form-group col-sm-6">
-            <label class="col-sm-4 control-label">归属部门：</label>
+            <label class="col-sm-4 control-label">归属部门：${user.office.name}</label>
             <div class="col-sm-8">
                 <sys:treeselect id="office" name="office.id"
                                 value="${user.office.id}" labelName="office.name"
