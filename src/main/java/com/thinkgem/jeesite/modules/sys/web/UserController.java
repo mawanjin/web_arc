@@ -37,8 +37,8 @@ import java.util.Map;
 /**
  * 用户Controller
  *
- * @author ThinkGem
- * @version 2013-8-29
+ * @author mawj
+ * @version 2016-8-31
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/user")
@@ -66,17 +66,17 @@ public class UserController extends BaseController {
     @RequestMapping(value = {"list", ""})
     public String list(User user, HttpServletRequest request, HttpServletResponse response, Model model) {
 
-        Office office = user.getOffice();
-        if(office!=null){
-            String officeName = office.getName();
-            if(officeName!=null){
-                try {
-                    office.setName(URLDecoder.decode(officeName,"UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+//        Office office = user.getOffice();
+//        if(office!=null){
+//            String officeName = office.getName();
+//            if(officeName!=null){
+//                try {
+//                    office.setName(URLDecoder.decode(officeName,"UTF-8"));
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
 
         Page<User> page = systemService.findUser(new Page<User>(request, response), user);
         model.addAttribute("page", page);

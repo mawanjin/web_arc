@@ -33,7 +33,7 @@
                 <sys:treeselect id="company" name="company.id" value="${user.company.id}"
                                 labelName="company.name" labelValue="${user.company.name}"
                                 title="公司" url="/sys/office/treeData?type=1" cssClass="form-control"
-                                allowClear="true"/></div>
+                                allowClear="true" /></div>
         </div>
         <div class="form-group col-sm-6">
             <label class="col-sm-4 control-label">登录名：</label>
