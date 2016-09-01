@@ -24,6 +24,16 @@
 		<include refid="oaNotifyRecordJoins"/>
 		WHERE a.id = #{id}
 	</select>
+
+	<select id="getByNotifyId" resultType="OaNotifyRecord">
+		SELECT
+		<include refid="oaNotifyRecordColumns"/>
+		FROM OA_NOTIFY_RECORD a
+		<include refid="oaNotifyRecordJoins"/>
+		WHERE a.oa_notify_id = #{id}
+	</select>
+
+
 	
 	<select id="findList" resultType="OaNotifyRecord">
 		SELECT 

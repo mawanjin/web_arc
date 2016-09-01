@@ -143,7 +143,7 @@
             <shiro:hasPermission name="oa:oaNotify:edit"><input id="btnSubmit" class="btn btn-primary" type="submit"
                                                                 value="保 存"/>&nbsp;</shiro:hasPermission>
         </c:if>
-        <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
+        <input id="btnCancel" class="btn" type="button" value="返 回" onclick="window.location.href='${ctx}/oa/oaNotify/self'"/>
     </div>
 </form:form>
 </body>
