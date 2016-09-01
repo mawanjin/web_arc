@@ -11,6 +11,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=${ctxStatic}edge">
     <title>${fns:getConfig('productName')}</title>
     <%@include file="/WEB-INF/views/include/adminlte.jsp" %>
+
+    <script>
+        function refreshUnreadMessageCount(){
+            $(".badge").each(function(){
+                var num = $(this).text();
+                if(num!=undefined){
+                    if(parseInt(num)-1<1){
+                        $(this).hide();
+                    }else
+                        $(this).text((parseInt(num)-1)+"");
+
+                }
+            });
+        }
+    </script>
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -40,7 +56,11 @@
                             <li class=" ${menu.id eq param.parentId ? ' active' : ''}">
                                 <c:if test="${empty menu.href}">
                                     <a href="?parentId=${menu.id}"
-                                       data-id="${menu.id}">${menu.name}</a>
+                                       data-id="${menu.id}">${menu.name}
+                                        <c:if test="${menu.badge gt 0}">
+                                            <span class="badge" style="border-radius:0px;background-color:crimson;">${menu.badge}</span>
+                                        </c:if>
+                                    </a>
                                 </c:if>
                                 <c:if test="${not empty menu.href}">
                                     <a href="${fn:indexOf(menu.href, '://') eq -1 ? ctx : ''}${menu.href}"
@@ -114,7 +134,11 @@
                         </c:if>
 
                         <a href="#">
-                            <i class="fa fa-dashboard"></i> <span>${menu.name}</span> <i
+                            <i class="fa fa-dashboard"></i> <span>${menu.name}</span>
+                            <c:if test="${menu.badge gt 0}">
+                                <span class="badge" style="min-width: 15px; width: 20px;border-radius:0px;background-color:crimson;">${menu.badge}</span>
+                            </c:if>
+                            <i
                                 class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
@@ -128,7 +152,13 @@
                                     </c:if>
                                     <a href="${fn:indexOf(vo.href, '://') eq -1 ? ctx : ''}${vo.href}"
                                        data-id="${vo.id}" target="mainFrame"><i
-                                            class="fa fa-circle-o"></i> ${vo.name}</a></li>
+                                            class="fa fa-circle-o"></i> ${vo.name}
+                                        <c:if test="${menu.badge gt 0 and vo.name eq '我的通告'}">
+                                            <span class="badge" style="min-width: 15px; width: 20px;border-radius:0px; background-color:crimson;">${menu.badge}</span>
+                                        </c:if>
+                                    </a>
+
+                                    </li>
                                     <c:if test="${firstUrl==''}">
                                         <c:set var="firstUrl"
                                                value="${fn:indexOf(vo.href, '://') eq -1 ? ctx : ''}${vo.href}"></c:set>

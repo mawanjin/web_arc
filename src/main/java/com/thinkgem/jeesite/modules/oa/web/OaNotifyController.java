@@ -120,9 +120,11 @@ public class OaNotifyController extends BaseController {
 	@RequestMapping(value = "view")
 	public String view(OaNotify oaNotify, Model model) {
 		if (StringUtils.isNotBlank(oaNotify.getId())){
-			oaNotifyService.updateReadFlag(oaNotify);
+
+			model.addAttribute("updateReadFlag", oaNotifyService.updateReadFlag(oaNotify));
 			oaNotify = oaNotifyService.getRecordList(oaNotify);
 			model.addAttribute("oaNotify", oaNotify);
+
 			return "modules/oa/oaNotifyForm";
 		}
 		return "redirect:" + adminPath + "/oa/oaNotify/self?repage";

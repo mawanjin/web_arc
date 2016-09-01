@@ -9,11 +9,13 @@ import com.thinkgem.jeesite.modules.oa.dao.OaNotifyDao;
 import com.thinkgem.jeesite.modules.oa.dao.OaNotifyRecordDao;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
 import com.thinkgem.jeesite.modules.oa.entity.OaNotifyRecord;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 通知通告Service
@@ -27,6 +29,8 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 
     @Autowired
     private OaNotifyRecordDao oaNotifyRecordDao;
+    @Autowired
+    private OaNotifyDao oaNotifyDao;
 
     public OaNotify get(String id) {
         OaNotify entity = dao.get(id);
@@ -78,11 +82,22 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
      * 更新阅读状态
      */
     @Transactional(readOnly = false)
-    public void updateReadFlag(OaNotify oaNotify) {
+    public boolean updateReadFlag(OaNotify oaNotify) {
+        boolean f = false;
+
         OaNotifyRecord oaNotifyRecord = new OaNotifyRecord(oaNotify);
         oaNotifyRecord.setUser(oaNotifyRecord.getCurrentUser());
+        OaNotifyRecord _oaNotifyRecord = oaNotifyRecordDao.getByNotifyId(oaNotify.getId());
+
+
+        if(_oaNotifyRecord!=null){
+            if(_oaNotifyRecord.getReadFlag()!=null&&_oaNotifyRecord.getReadFlag().equals("0"))f = true;
+        }
         oaNotifyRecord.setReadDate(new Date());
         oaNotifyRecord.setReadFlag("1");
         oaNotifyRecordDao.update(oaNotifyRecord);
+        //刷新缓存menu
+        UserUtils.refreshMenuList();
+        return f;
     }
 }

@@ -36,6 +36,16 @@
 		<include refid="oaNotifyJoins"/>
 		WHERE a.id = #{id}
 	</select>
+
+
+	<select id="getByNotifyId" resultType="OaNotify">
+		SELECT
+		<include refid="oaNotifyColumns"/>
+		FROM OA_NOTIFY a
+		<include refid="oaNotifyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+
 	
 	<select id="findList" resultType="OaNotify">
 		SELECT 
@@ -92,7 +102,8 @@
 			AND a.STATUS = '1'
 		</if>
 	</select>
-	
+
+
 	<insert id="insert">
 		INSERT INTO OA_NOTIFY(
 			ID,

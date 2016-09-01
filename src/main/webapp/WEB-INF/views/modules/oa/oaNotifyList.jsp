@@ -6,6 +6,7 @@
     <meta name="decorator" content="default"/>
     <script type="text/javascript">
         $(document).ready(function () {
+
         });
         function page(n, s) {
             $("#pageNo").val(n);
@@ -81,7 +82,6 @@
         <tr>
             <td><a onclick="read(this)" href="${ctx}/oa/oaNotify/${requestScope.oaNotify.self?'view':'form'}?id=${oaNotify.id}" <c:if test="${oaNotify.readFlag eq 0}">style="color:red" </c:if>>
                     ${fns:abbr(oaNotify.title,50)}
-
             </a></td>
             <td>
                     ${fns:getDictLabel(oaNotify.type, 'oa_notify_type', '')}

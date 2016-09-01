@@ -6,6 +6,9 @@ package com.thinkgem.jeesite.modules.sys.utils;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.common.utils.SpringContextHolder;
+import com.thinkgem.jeesite.modules.oa.dao.OaNotifyDao;
+import com.thinkgem.jeesite.modules.oa.dao.OaNotifyRecordDao;
+import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
 import com.thinkgem.jeesite.modules.sys.dao.*;
 import com.thinkgem.jeesite.modules.sys.entity.*;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
@@ -14,6 +17,8 @@ import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -24,12 +29,13 @@ import java.util.List;
  * @version 2013-12-05
  */
 public class UserUtils {
-
+    private static Logger logger = LoggerFactory.getLogger(UserUtils.class);
     private static UserDao userDao = SpringContextHolder.getBean(UserDao.class);
     private static RoleDao roleDao = SpringContextHolder.getBean(RoleDao.class);
     private static MenuDao menuDao = SpringContextHolder.getBean(MenuDao.class);
     private static AreaDao areaDao = SpringContextHolder.getBean(AreaDao.class);
     private static OfficeDao officeDao = SpringContextHolder.getBean(OfficeDao.class);
+    private static OaNotifyDao oaNotifyDao = SpringContextHolder.getBean(OaNotifyDao.class);
 
     public static final String USER_CACHE = "userCache";
     public static final String USER_CACHE_ID_ = "id_";
@@ -165,9 +171,29 @@ public class UserUtils {
                 m.setUserId(user.getId());
                 menuList = menuDao.findByUserId(m);
             }
+
+            //wrap badge,only for unread message now.
+            OaNotify oaNotify = new OaNotify();
+            oaNotify.setCurrentUser(user);
+            oaNotify.setReadFlag("0");
+            oaNotify.setSelf(true);
+            long unreadOAMessageCount = oaNotifyDao.findCount(oaNotify);
+            logger.info("unreadOAMessageCount is "+unreadOAMessageCount);
+
+            for(Menu menu:menuList){
+                if(menu.getName()!=null&&menu.getName().equals("在线办公")||menu.getName()!=null&&menu.getName().equals("我的通告")||menu.getName()!=null&&menu.getName().equals("通知通告")||menu.getName()!=null&&menu.getName().equals("我的通告")){
+                    menu.setBadge((int) unreadOAMessageCount);
+                }
+            }
+
             putCache(CACHE_MENU_LIST, menuList);
         }
         return menuList;
+    }
+
+    public static void refreshMenuList(){
+        removeCache(CACHE_MENU_LIST);
+        getMenuList();
     }
 
     /**

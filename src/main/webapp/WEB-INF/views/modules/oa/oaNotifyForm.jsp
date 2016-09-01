@@ -23,6 +23,10 @@
                     }
                 }
             });
+            <c:if test="${updateReadFlag}">
+                top.refreshUnreadMessageCount();
+            </c:if>
+
         });
     </script>
 </head>

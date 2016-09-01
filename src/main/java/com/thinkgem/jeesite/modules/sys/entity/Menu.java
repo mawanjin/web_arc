@@ -32,6 +32,7 @@ public class Menu extends DataEntity<Menu> {
 	private String permission; // 权限标识
 	
 	private String userId;
+	private int badge=0;//0是不显示,大于0则显示
 	
 	public Menu(){
 		super();
@@ -162,6 +163,14 @@ public class Menu extends DataEntity<Menu> {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public int getBadge() {
+		return badge;
+	}
+
+	public void setBadge(int badge) {
+		this.badge = badge;
 	}
 
 	@Override
