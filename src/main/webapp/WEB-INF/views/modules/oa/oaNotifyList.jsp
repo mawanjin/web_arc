@@ -6,13 +6,16 @@
     <meta name="decorator" content="default"/>
     <script type="text/javascript">
         $(document).ready(function () {
-
         });
         function page(n, s) {
             $("#pageNo").val(n);
             $("#pageSize").val(s);
             $("#searchForm").submit();
             return false;
+        }
+
+        function read(obj){
+            $(obj).attr("style","");
         }
     </script>
 </head>
@@ -76,8 +79,9 @@
     <tbody>
     <c:forEach items="${page.list}" var="oaNotify">
         <tr>
-            <td><a href="${ctx}/oa/oaNotify/${requestScope.oaNotify.self?'view':'form'}?id=${oaNotify.id}">
+            <td><a onclick="read(this)" href="${ctx}/oa/oaNotify/${requestScope.oaNotify.self?'view':'form'}?id=${oaNotify.id}" <c:if test="${oaNotify.readFlag eq 0}">style="color:red" </c:if>>
                     ${fns:abbr(oaNotify.title,50)}
+
             </a></td>
             <td>
                     ${fns:getDictLabel(oaNotify.type, 'oa_notify_type', '')}
@@ -100,7 +104,7 @@
                 <td>
                     <a href="${ctx}/oa/oaNotify/form?id=${oaNotify.id}">修改</a>
                     <a href="${ctx}/oa/oaNotify/delete?id=${oaNotify.id}"
-                       onclick="return confirmx('确认要删除该通知吗？', this.href)">删除</a>
+                       onclick="return confirm('确认要删除该通知吗？', this.href)">删除</a>
                 </td>
             </shiro:hasPermission></c:if>
         </tr>
