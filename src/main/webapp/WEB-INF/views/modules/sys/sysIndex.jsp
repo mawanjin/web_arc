@@ -13,6 +13,10 @@
     <%@include file="/WEB-INF/views/include/adminlte.jsp" %>
 
     <script>
+        function refresh(){
+            window.refresh();
+        }
+
         function refreshUnreadMessageCount(){
             $(".badge").each(function(){
                 var num = $(this).text();
