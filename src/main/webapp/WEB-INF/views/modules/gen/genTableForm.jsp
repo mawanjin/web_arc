@@ -12,8 +12,8 @@
                 submitHandler: function (form) {
                     loading('正在提交，请稍等...');
                     $("input[type=checkbox]").each(function () {
-                        $(this).after("<input type=\"hidden\" name=\"" + $(this).attr("name") + "\" value=\""
-                                + ($(this).attr("checked") ? "1" : "0") + "\"/>");
+
+                        $(this).after("<input type=\"hidden\" name=\"" + $(this).attr("name") + "\" value=\""+ ($(this).attr("checked") ? "1" : "0") + "\"/>");
                         $(this).attr("name", "_" + $(this).attr("name"));
                     });
                     form.submit();
@@ -28,6 +28,16 @@
                     }
                 }
             });
+
+            $("input[type=checkbox]").click(function(){
+
+                if($(this).attr("checked")==true) {
+                    $(this).removeAttr("checked")
+                } else {
+                    $(this).attr("checked",true);
+                }
+            });
+
         });
     </script>
 </head>
@@ -63,7 +73,7 @@
     </c:when>
     <c:otherwise>
         <form:form id="inputForm" modelAttribute="genTable" action="${ctx}/gen/genTable/save" method="post"
-                   class="col-md-8" role="form">
+                   class="col-md-10" role="form">
             <form:hidden path="id"/>
             <sys:message content="${message}"/>
             <fieldset>
@@ -119,8 +129,8 @@
                             <td title="数据库字段名">列名</td>
                             <td title="默认读取数据库字段备注">说明</td>
                             <td title="数据库中设置的字段类型及长度">物理类型</td>
-                            <td style="width: 15%" title="实体对象的属性字段类型">Java类型</td>
-                            <td style="width: 15%"
+                            <td style="width: 10%" title="实体对象的属性字段类型">Java类型</td>
+                            <td style="width: 10%"
                                 title="实体对象的属性字段（对象名.属性名|属性名2|属性名3，例如：用户user.id|name|loginName，属性名2和属性名3为Join时关联查询的字段）">
                                 Java属性名称 <i class="icon-question-sign"></i></td>
                             <td title="是否是数据库主键">主键</td>
@@ -129,7 +139,7 @@
                             <td title="选中后该字段被加入到update语句里">编辑</td>
                             <td title="选中后该字段被加入到查询列表里">列表</td>
                             <td title="选中后该字段被加入到查询条件里">查询</td>
-                            <td style="width: 20%" title="该字段为查询字段时的查询匹配放松">查询匹配方式</td>
+                            <td style="width: 10%" title="该字段为查询字段时的查询匹配放松">查询匹配方式</td>
                             <td title="字段在表单中显示的类型">显示表单类型</td>
                             <td title="显示表单类型设置为“下拉框、复选框、点选框”时，需设置字典的类型">字典类型</td>
                             <td>排序</td>
@@ -149,8 +159,8 @@
                                 </td>
                                 <td>
                                     <input  type="text" name="columnList[${vs.index}].comments"
-                                           value="${column.comments}" maxlength="200" class="form-control required"
-                                           style="width:50px;"/>
+                                            value="${column.comments}" maxlength="200" class="form-control required"
+                                            style="width:50px;"/>
                                 </td>
                                 <td nowrap>
                                     <input type="hidden" name="columnList[${vs.index}].jdbcType"
